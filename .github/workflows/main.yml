@@ -17,6 +17,7 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
+          extensions: grpc
       - run: composer install --no-interaction --no-progress --prefer-dist
       - run: composer cs
 
@@ -27,6 +28,7 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
+          extensions: grpc
       - run: composer install --no-interaction --no-progress --prefer-dist
       - run: composer phpstan
 
@@ -40,22 +42,24 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
+          extensions: grpc
       - run: composer install --no-interaction --no-progress --prefer-dist
       - run: composer test
 
-  coverage:
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
-    runs-on: ubuntu-latest
-    env:
-      COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.1'
-          coverage: xdebug
-      - run: composer install --no-interaction --no-progress --prefer-dist
-      - run: composer coverage
-      - run: |
-          wget https://github.com/php-coveralls/php-coveralls/releases/download/v2.6.0/php-coveralls.phar
-          php php-coveralls.phar --coverage_clover=coverage.xml --json_path=coverage.json
+#  coverage:
+#    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+#    runs-on: ubuntu-latest
+#    env:
+#      COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#    steps:
+#      - uses: actions/checkout@v4
+#      - uses: shivammathur/setup-php@v2
+#        with:
+#          php-version: '8.1'
+#          extensions: grpc
+#          coverage: pcov
+#      - run: composer install --no-interaction --no-progress --prefer-dist
+#      - run: composer coverage
+#      - run: |
+#          wget https://github.com/php-coveralls/php-coveralls/releases/download/v2.6.0/php-coveralls.phar
+#          php php-coveralls.phar --coverage_clover=coverage.xml --json_path=coverage.json

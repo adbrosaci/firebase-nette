@@ -3,8 +3,13 @@
 namespace Tests\Cases\Unit\DI;
 
 use Adbros\Firebase\DI\Extension;
+use Kreait\Firebase\Contract\Auth;
+use Kreait\Firebase\Contract\Database;
+use Kreait\Firebase\Contract\DynamicLinks;
+use Kreait\Firebase\Contract\Firestore;
 use Kreait\Firebase\Contract\Messaging;
-use Kreait\Firebase\Factory;
+use Kreait\Firebase\Contract\RemoteConfig;
+use Kreait\Firebase\Contract\Storage;
 use Nette\DI\Compiler;
 use Nette\DI\Container;
 use Nette\DI\ContainerLoader;
@@ -37,8 +42,13 @@ class ExtensionTest extends TestCase
 		$container = new $class();
 
 		Assert::noError(function () use ($container): void {
-			$container->getByType(Factory::class);
+			$container->getByType(Database::class);
+			$container->getByType(Auth::class);
+			$container->getByType(Storage::class);
+			$container->getByType(RemoteConfig::class);
 			$container->getByType(Messaging::class);
+			$container->getByType(Firestore::class);
+			$container->getByType(DynamicLinks::class);
 		});
 	}
 
