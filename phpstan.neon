@@ -1,0 +1,10 @@
+parameters:
+	level: max
+	paths:
+		- src
+		- tests
+	excludePaths:
+		- tests/tmp
+	fileExtensions:
+		- php
+		- phpt
